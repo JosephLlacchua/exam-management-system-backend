@@ -1,6 +1,8 @@
 package com.sistema.examenes.exams.application.internal.queryservices;
 
 import com.sistema.examenes.exams.domain.model.aggregates.Exam;
+import com.sistema.examenes.exams.domain.model.aggregates.Question;
+import com.sistema.examenes.exams.domain.model.queries.GetAllExamsActiveQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetAllExamsQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetExamByIdQuery;
 import com.sistema.examenes.exams.domain.services.ExamQueryService;
@@ -22,6 +24,11 @@ public class ExamQueryServiceImpl implements ExamQueryService{
     @Override
     public List<Exam> handle(GetAllExamsQuery query) {
         return this.examRepository.findAll();
+    }
+
+    @Override
+    public List<Exam> handle(GetAllExamsActiveQuery query) {
+        return this.examRepository.findAllByActiveTrue();
     }
 
     @Override

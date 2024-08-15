@@ -77,6 +77,7 @@ public class UsersController {
             return ResponseEntity.badRequest().build();
         }
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(updatedUser.get());
+        
         return ResponseEntity.ok(userResource);
     }
 

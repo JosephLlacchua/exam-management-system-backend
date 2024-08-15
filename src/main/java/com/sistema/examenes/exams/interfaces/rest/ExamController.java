@@ -2,6 +2,7 @@ package com.sistema.examenes.exams.interfaces.rest;
 
 
 import com.sistema.examenes.exams.domain.model.commands.DeleteExamCommand;
+import com.sistema.examenes.exams.domain.model.queries.GetAllExamsActiveQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetAllExamsQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetExamByIdQuery;
 import com.sistema.examenes.exams.domain.services.ExamCommandService;
@@ -50,6 +51,15 @@ public class ExamController {
         var examResource = ExamResourceFromEntityAssembler.toResourceFromEntity(exam.get());
         return ResponseEntity.ok(examResource);
     }
+
+    @GetMapping(value = "/active")
+    public ResponseEntity<List<ExamResource>> getAllActiveExams(){
+        var getAllExamsActiveQuery = new GetAllExamsActiveQuery();
+        var exams = examQueryService.handle(getAllExamsActiveQuery);
+        var examResources=exams.stream().map(ExamResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(examResources);
+    }
+
 
     @PostMapping
     public ResponseEntity<ExamResource> createExam(@RequestBody CreateExamResource resource){

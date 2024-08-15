@@ -1,6 +1,7 @@
 package com.sistema.examenes.exams.domain.services;
 
 import com.sistema.examenes.exams.domain.model.aggregates.Question;
+import com.sistema.examenes.exams.domain.model.queries.GetAllExamsActiveQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetAllQuestionsByExamIdQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetAllQuestionsQuery;
 import com.sistema.examenes.exams.domain.model.queries.GetQuestionByIdQuery;
@@ -13,6 +14,4 @@ public interface QuestionQueryService {
     List<Question> handle(GetAllQuestionsQuery query);
     Optional<Question>handle(GetQuestionByIdQuery query);
     Set<Question>handle(GetAllQuestionsByExamIdQuery query);
-
-
 }
