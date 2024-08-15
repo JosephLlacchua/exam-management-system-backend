@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface ExamRepository extends JpaRepository<Exam, Long> {
     List<Exam> findAllByActiveTrue();
+    List<Exam> findAllByCategoryId(Long categoryId);
+    List<Exam> findAllByCategoryIdAndActiveTrue(Long categoryId);
 
 }

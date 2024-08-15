@@ -2,9 +2,7 @@ package com.sistema.examenes.exams.interfaces.rest;
 
 
 import com.sistema.examenes.exams.domain.model.commands.DeleteExamCommand;
-import com.sistema.examenes.exams.domain.model.queries.GetAllExamsActiveQuery;
-import com.sistema.examenes.exams.domain.model.queries.GetAllExamsQuery;
-import com.sistema.examenes.exams.domain.model.queries.GetExamByIdQuery;
+import com.sistema.examenes.exams.domain.model.queries.*;
 import com.sistema.examenes.exams.domain.services.ExamCommandService;
 import com.sistema.examenes.exams.domain.services.ExamQueryService;
 import com.sistema.examenes.exams.interfaces.rest.resources.CreateExamResource;
@@ -60,6 +58,21 @@ public class ExamController {
         return ResponseEntity.ok(examResources);
     }
 
+    @GetMapping(value = "/category/{categoryId}")
+    public ResponseEntity<List<ExamResource>> getAllExamsByCategory(@PathVariable Long categoryId){
+        var getAllExamsByCategoryQuery = new GetAllExamsByCategoryIdQuery(categoryId);
+        var exams = examQueryService.handle(getAllExamsByCategoryQuery);
+        var examResources=exams.stream().map(ExamResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(examResources);
+    }
+
+    @GetMapping(value = "/category/{categoryId}/active")
+    public ResponseEntity<List<ExamResource>> getAllActiveExamsByCategory(@PathVariable Long categoryId){
+        var getAllExamsByCategoryQuery = new GetAllExamsByCategoryIdAndActiveQuery(categoryId);
+        var exams = examQueryService.handle(getAllExamsByCategoryQuery);
+        var examResources=exams.stream().map(ExamResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(examResources);
+    }
 
     @PostMapping
     public ResponseEntity<ExamResource> createExam(@RequestBody CreateExamResource resource){

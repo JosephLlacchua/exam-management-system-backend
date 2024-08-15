@@ -1,10 +1,7 @@
 package com.sistema.examenes.exams.application.internal.queryservices;
 
 import com.sistema.examenes.exams.domain.model.aggregates.Exam;
-import com.sistema.examenes.exams.domain.model.aggregates.Question;
-import com.sistema.examenes.exams.domain.model.queries.GetAllExamsActiveQuery;
-import com.sistema.examenes.exams.domain.model.queries.GetAllExamsQuery;
-import com.sistema.examenes.exams.domain.model.queries.GetExamByIdQuery;
+import com.sistema.examenes.exams.domain.model.queries.*;
 import com.sistema.examenes.exams.domain.services.ExamQueryService;
 import com.sistema.examenes.exams.infrastructure.persistence.jpa.ExamRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,16 @@ public class ExamQueryServiceImpl implements ExamQueryService{
     @Override
     public List<Exam> handle(GetAllExamsActiveQuery query) {
         return this.examRepository.findAllByActiveTrue();
+    }
+
+    @Override
+    public List<Exam> handle(GetAllExamsByCategoryIdQuery query) {
+        return this.examRepository.findAllByCategoryId(query.categoryId());
+    }
+
+    @Override
+    public List<Exam> handle(GetAllExamsByCategoryIdAndActiveQuery query) {
+        return this.examRepository.findAllByCategoryIdAndActiveTrue(query.categoryId());
     }
 
     @Override
